@@ -35,7 +35,7 @@ const connecting =  mysql.createConnection({
 
     exports.getAllPatients = async (req, res) =>{
 
-      const query = 'SELECT * FROM DOCTOR_T';
+      const query = 'SELECT * FROM PATIENT_';
   
           try {
   
@@ -49,6 +49,7 @@ const connecting =  mysql.createConnection({
   
   }
   
+      
   
   
     
