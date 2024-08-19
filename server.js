@@ -1,7 +1,6 @@
 const express = require("express")
 const server = express()
-// const { connect } = require("http2")
-
+server.use("/",require("./router/Routes"))
 server.use(express.json())
 
 
