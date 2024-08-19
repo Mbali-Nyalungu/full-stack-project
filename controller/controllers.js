@@ -36,4 +36,25 @@ exports.createAllDoctors = async (req ,res) =>{
   
       
   
-  
+      exports.getAllPatientsById = async (req, res) => {
+        const { Patient_num } = req.params;
+    
+        const query = 'SELECT * FROM PATIENT_ WHERE Patient_num = ?';
+        const values = [Patient_num ];
+    
+        try {
+            const [results] = await con.promise().query(query, values);
+            if (results.length > 0) {
+                res.json(results[0]);
+            } else {
+                res.status(404).json({ message: "Patient not found " });
+            }
+        } catch (err) {
+            console.error(`Error executing query: ${err}`);
+            res.status(500).send('An error occurred while retrieving data');
+        }
+    }
+    
+     
+    
+    
