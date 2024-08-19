@@ -17,7 +17,7 @@ exports.getAllPatients = async (req, res) =>{
 
 }
 
-exports.createAllDoctors = async (req ,res) =>{ 
+exports.createAllpatients= async (req ,res) =>{ 
     const { Patient_num,Patient_Surname, Patient_name,DateOfBirth ,gender,Patient_cellphone } = req.body;
         const query = `
             INSERT INTO Patient_T (Patient_Surname, Patient_name,DateOfBirth ,gender,Patient_cellphone);
