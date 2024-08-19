@@ -90,6 +90,32 @@ exports.createAllDoctors = async (req ,res) =>{
         res.status(500).send('An error occurred while updating data');
     }
 }
+exports.deleteAllPatientsById = async (req, res) => {
+    const { Patient_num } = req.params;
+
+    try {
+       
+        const [patients] = await con.promise().query
+        ('SELECT * FROM PATIENT_ WHERE Patient_num = ?', [Patient_num]);
+
+        if (patients.length === 0) {
+            return res.status(404).json({ message: "Patient not found" });
+        }
+
+        
+        const deleteQuery = 'DELETE FROM Patient_T WHERE Patient_num = ?';
+        const [result] = await con.promise().query(deleteQuery, [Patient_num]);
+
+        if (result.affectedRows > 0) {
+            res.status(201).json({ message: "Patient successfully deleted" });
+        } else {
+            res.status(404).json({ message: "Patient not found"  });
+        }
+    } catch (err) {
+        console.error(`Error executing query: ${err}`);
+        res.status(500).send('An error occurred while deleting data');
+    }
+};
      
     
     
