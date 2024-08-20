@@ -12,17 +12,17 @@ const connection =  mysql.createConnection({
 
 exports.getAllPatients = async (req, res) =>{
 
-    const query = 'SELECT * FROM PATIENT_';
+const query = 'SELECT * FROM PATIENT_';
 
-        try {
+    try {
 
             const [results] = await connection.promise().query(query);
             res.json(results);
-            console.log(results);
-        } catch (err) {
+            // console.log(results);
+    } catch (err) {
             console.error(`Error executing query: ${err}`);
-            res.status(500).send('An error occurred while retrieving data');
-        }
+            // res.status(500).send('An error occurred while retrieving data');
+    }
 
 };
 
@@ -45,7 +45,7 @@ exports.createAllPatients = async (req ,res) =>{
   
       
   
-      exports.getAllPatientsById = async (req, res) => {
+    exports.getAllPatientsById = async (req, res) => {
         const {Patient_num } = req.params;
     
         const query = 'SELECT * FROM PATIENT_ WHERE Patient_num = ?';
@@ -58,7 +58,10 @@ exports.createAllPatients = async (req ,res) =>{
             } else {
                 res.status(404).json({ message: "Patient not found " });
             }
-        } catch (err) {
+                }
+                
+
+      catch (err) {
             console.error(`Error executing query: ${err}`);
             res.status(500).send('An error occurred while retrieving data');
         }
@@ -67,20 +70,13 @@ exports.createAllPatients = async (req ,res) =>{
 
     
     exports.updateAllPatientsById = async (req, res) => {
+
+        
         const { Patient_num } = req.params;
         const {Patient_Surname, Patient_name,DateOfBirth ,gender,Patient_cellphone } = req.body;
     
-        // try {
-            
-        //     const [patient] = await connecting.promise().query('SELECT * FROM PATIENT_');
-        //     const Patients = Patients.find(pat => pat.Patient_num  == Patient_num );
-    
-        //     if (!patient) {
-        //         return res.status(404).json({ message: "Patient not found" });
-        //     }
         
-       
-       
+    
 
        const updateQuery = `
             UPDATE PATIENT_
@@ -89,8 +85,7 @@ exports.createAllPatients = async (req ,res) =>{
         `;
         const updateValues = [Patient_Surname, Patient_name,DateOfBirth ,gender,Patient_cellphone,Patient_num];
 
-        // const [results] = await connecting.promise().query(updateQuery, updateValues);
-
+        
        try{ 
         const [results] = await connection.promise().query(updateQuery, updateValues);
         if (results.affectedRows > 0) {
@@ -109,12 +104,7 @@ exports.deleteAllPatientsById = async (req, res) => {
 
     try {
        
-        const [patients] = await connection.promise().query
-        ('SELECT * FROM PATIENT_ WHERE Patient_num = ?', [Patient_num]);
-
-        if (patients.length === 0) {
-            return res.status(404).json({ message: "Patient not found" });
-        }
+       
 
         
         const deleteQuery = 'DELETE FROM PATIENT_ WHERE Patient_num = ?';
@@ -129,6 +119,9 @@ exports.deleteAllPatientsById = async (req, res) => {
         console.error(`Error executing query: ${err}`);
         res.status(500).send('An error occurred while deleting data');
     }
+
+
+
 };
      
     
