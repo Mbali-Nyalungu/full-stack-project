@@ -23,3 +23,16 @@ body {
 
 }
 
+
+
+.container input, .container button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+button{
+    display: block;
+ 
+    padding: 10px;
+}
