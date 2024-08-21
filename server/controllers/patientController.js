@@ -4,7 +4,8 @@ const connection =  mysql.createConnection({
     user: "root",
     host: "localhost",
     database: "HOSPITAL_MANAGEMENT",
-    password:"Letsdoit!"
+    password: "Letsdoit!",
+    // port: 2001
     
 
 });
@@ -119,6 +120,10 @@ exports.deleteAllPatientsById = async (req, res) => {
         console.error(`Error executing query: ${err}`);
         res.status(500).send('An error occurred while deleting data');
     }
+
+   
+    
+    
 
 
 
