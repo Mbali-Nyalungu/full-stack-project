@@ -4,3 +4,13 @@ body {
     background-color: rgb(127, 229, 255);
 }
 
+.table th .table td{
+    border: 1px solid whitesmoke;
+    padding: 10px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
