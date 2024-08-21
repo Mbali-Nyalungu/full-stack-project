@@ -14,3 +14,12 @@ body {
     background-color: #f4f4f4;
     font-weight: bold;
 }
+
+.form{ display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    align-content: end;
+   grid-row: auto;
+   grid-gap:30px;
+
+}
+
