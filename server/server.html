@@ -1,0 +1,58 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="server.css">
+</head>
+<body>
+    <button id="showTable">Show Table</button>
+    <button id="displayPatients">Toggle Table</button>
+    
+    <h2 id="formTitle">Add Patient</h2>
+    <form id="form" >
+        <!-- <h2 id="formTitle">Add Patient</h2> -->
+        <input type="hidden" id="patientNum">
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" required>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <label for="cellphone">Cellphone:</label>
+        <input type="text" id="cellphone" required>
+        <label for="gender">Gender:</label>
+        <input type="text" id="gender" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+        <button type="submit" id="submit">Save</button>
+        <button type="button" id="cancelButton">Cancel</button>
+    </form>
+    
+    <div id="table" class = "hidden">
+        <h2>Patient List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient Number</th>
+                    <th>Surname</th>
+                    <th>Name</th>
+                    <th>Cellphone</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="patientTableBody">
+                
+            </tbody>
+        </table>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html> 
