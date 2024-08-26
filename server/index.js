@@ -1,5 +1,6 @@
 
 
+
 document.addEventListener('DOMContentLoaded', () => {
     const showTable = document.getElementById('showTable');
     const displayPatients = document.getElementById('displayPatients');
@@ -16,33 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const patientTableBody = document.getElementById('patientTableBody');
 
     let patients = [];
+    let isEditing = false;
+    let currentPatientId = null;
 
-   
     showTable.addEventListener('click', () => {
         table.classList.toggle('hidden');
         showTable.textContent = table.classList.contains('hidden') ? 'Show Table' : 'Hide Table';
     });
 
-    
     displayPatients.addEventListener('click', fetchPatients);
 
-    
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        
         const patient = {
             Patient_Surname: surnameInput.value.trim(),
             Patient_name: nameInput.value.trim(),
             Patient_cellphone: cellphoneInput.value.trim(),
             gender: genderInput.value.trim(),
-            DateOfBirth: dobInput.value
+            DateOfBirth: dobInput.value.trim()
         };
 
-        const patientId = patientNumInput.value.trim();
-        const method = patientId ? 'PUT' : 'POST'; 
-        const url = patientId ? 
-            `http://localhost:2002/patients/${patientId}` : 
+        const method = isEditing ? 'PUT' : 'POST';
+        const url = isEditing ? 
+            `http://localhost:2002/patients/${currentPatientId}` : 
             'http://localhost:2002/patients';
 
         try {
@@ -59,14 +57,13 @@ document.addEventListener('DOMContentLoaded', () => {
             resetForm();
             fetchPatients(); 
         } catch (error) {
-            console.error(`Error ${method === 'POST' ? 'adding' : 'updating'} patient:`, error);
+            console.error(`Error ${isEditing ? 'updating' : 'adding'} patient:`, error);
             displayError('An error occurred. Please try again.');
         }
     });
 
     cancelButton.addEventListener('click', resetForm);
 
-   
     async function fetchPatients() {
         try {
             const response = await fetch('http://localhost:2002/patients');
@@ -81,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-  
     function renderTable() {
         patientTableBody.innerHTML = '';
         patients.forEach(patient => {
@@ -102,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
     patientTableBody.addEventListener('click', async (e) => {
         const id = e.target.dataset.id;
         if (e.target.classList.contains('edit-button')) {
@@ -115,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-   
     async function editPatient(id) {
         try {
             const response = await fetch(`http://localhost:2002/patients/${id}`);
@@ -129,7 +123,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 nameInput.value = patient.Patient_name;
                 cellphoneInput.value = patient.Patient_cellphone;
                 genderInput.value = patient.gender;
-                dobInput.value = patient.DateOfBirth;
+                dobInput.value = formatDateForInput(patient.DateOfBirth);
+                currentPatientId = patient.Patient_num;
+                isEditing = true;
                 formTitle.textContent = 'Update Patient';
                 form.classList.remove('hidden');
                 table.classList.add('hidden');
@@ -140,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-  
     async function deletePatient(id) {
         try {
             const response = await fetch(`http://localhost:2002/patients/${id}`, { method: 'DELETE' });
@@ -153,21 +148,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-   
     function resetForm() {
         patientNumInput.value = '';
         surnameInput.value = '';
         nameInput.value = '';
         cellphoneInput.value = '';
         genderInput.value = '';
-        dobInput.value = '';
+        dobInput.value = ''; 
+        currentPatientId = null;
+        isEditing = false;
         formTitle.textContent = 'Add Patient';
         table.classList.remove('hidden');
     }
 
-    
-    function displayError(message) {
+    function formatDateForInput(dateString) {
         
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0]; 
+    }
+
+    function displayError(message) {
         alert(message);
     }
 });
